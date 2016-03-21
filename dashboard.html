@@ -1,0 +1,350 @@
+<html class="loading">
+	<head>
+		<title>Analytics Playbook: Dashboard</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/chartist.min.css">
+		<link rel="stylesheet" href="css/chartist-plugin-tooltip.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/custom.css">
+		<!-- Necessary libraries -->
+		<script src="js/jquery-2.1.0.min.js" type="text/javascript"></script>
+		<!-- Charting libraries -->
+		<script src="js/chartist.min.js"></script>
+		<script src="js/chartist-plugin-tooltip.min.js"></script>
+		<script src="js/jquery.animateNumber.min.js" type="text/javascript"></script>
+		<script src="js/jquery.basic_table.js" type="text/javascript"></script>
+		 <!-- Marketing Cloud Javascript SDK to pull the data -->
+		<script src="js/marketing-cloud-javascript-sdk/wsse.js" type="text/javascript"></script>
+		<script src="js/marketing-cloud-javascript-sdk/marketing_cloud.js" type="text/javascript"></script>
+		<script src="js/config.js" type="text/javascript"></script>
+		<script src="js/custom.js" type="text/javascript"></script>
+		<script src="js/report.js" type="text/javascript"></script>
+		 <!-- Custom libraries -->
+		<script type="text/javascript" >
+			$(document).ready(function() {
+				var report = new Report({
+					id: "pageRanked",
+					dataElement: "#pageRank",
+					dataElementType: "RankGraphVer"
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						//"dateGranularity": "week",
+						"metrics": [
+							{ "id": "pageviews" }
+						], 
+						"elements": [
+						    { "id": "page","top":"10" }
+						],
+						"currentData": "true"
+					}
+				},{
+					fullWidth: true,
+					chartPadding: {
+						right: 40
+					},
+					lineSmooth: false,
+					seriesBarDistance: 10,
+					reverseData: true,
+					horizontalBars: true,
+					axisX: {
+						showGrid: false,
+						offset: 10,
+					},
+					axisY: {
+						offset: 150,
+					},
+					plugins: [Chartist.plugins.tooltip()]
+				},[
+				]);
+				var report = new Report({
+					id: "authRanked",
+					dataElement: "#authRank",
+					dataElementType: "RankGraphVer",
+					loadingDisable: true
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						//"dateGranularity": "week",
+						"metrics": [
+							{ "id": "pageviews" }
+						], 
+						"elements": [
+						    { "id": "prop1","top":"10" }
+						],
+						"currentData": "true"
+					}
+				},{
+					fullWidth: true,
+					chartPadding: {
+						right: 40
+					},
+					lineSmooth: false,
+					seriesBarDistance: 10,
+					reverseData: true,
+					horizontalBars: true,
+					axisX: {
+						showGrid: false,
+						offset: 10,
+					},
+					axisY: {
+						offset: 150,
+					},
+					plugins: [Chartist.plugins.tooltip()]
+				},[
+				]);
+				var report = new Report({
+					id: "pvTrended",
+					dataElement: "#pvTrend",
+					dataElementType: "TrendGraph",
+					totalElement: "#pvTotals",
+					animateTotal: true
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						"dateGranularity": "week",
+						"metrics": [
+							{ "id": "pageviews" },
+							{ "id": "visits" }
+						], 
+						"currentData": "true"
+					}
+				},{
+					fullWidth: true,
+					chartPadding: {
+						right: 40
+					},
+					showPoint: false,
+					lineSmooth: false,
+					axisX: {
+						showGrid: false,
+						offset: 10,
+					},
+					axisY: {
+						offset: 60,
+					},
+					plugins: [Chartist.plugins.tooltip()]
+				},[
+				]);
+				var report = new Report({
+					id: "forkTrended",
+					dataElement: "#forkTrend",
+					dataElementType: "TrendGraph",
+					totalElement: "#forkTotals",
+					animateTotal: true
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						"dateGranularity": "week",
+						"metrics": [
+							{ "id": "event1" }
+						], 
+						"currentData": "true"
+					}
+				},{
+					fullWidth: true,
+					chartPadding: {
+						right: 40
+					},
+					showPoint: false,
+					lineSmooth: false,
+					axisX: {
+						showGrid: false,
+						offset: 10,
+					},
+					axisY: {
+						offset: 60,
+					},
+					plugins: [Chartist.plugins.tooltip()]
+				},[
+				]);
+								var report = new Report({
+					id: "viTotal",
+					dataElementType: "None",
+					totalElement: "#viTotals",
+					animateTotal: true
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						"dateGranularity": "week",
+						"metrics": [
+							{ "id": "visits" }
+						], 
+						"currentData": "true"
+					}
+				},{},[]
+				);
+				var report = new Report({
+					id: "uvTotal",
+					dataElementType: "None",
+					totalElement: "#uvTotals",
+					animateTotal: true
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						"dateGranularity": "week",
+						"metrics": [
+							{ "id": "visitors" }
+						], 
+						"currentData": "true"
+					}
+				},{},[]
+				);
+				var report = new Report({
+					id: "tvTotal",
+					dataElementType: "None",
+					totalElementAverage: "#tvTotals",
+					totalElementExt: "min",
+					animateTotal: true
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						"dateGranularity": "week",
+						"metrics": [
+							{ "id": "averageTimeSpentOnSite" }
+						], 
+						"currentData": "true"
+					}
+				},{},[]
+				);
+				var report = new Report({
+					id: "brTotal",
+					dataElementType: "None",
+					totalElementAverage: "#brTotals",
+					totalElementExt: "%",
+					animateTotal: true
+				});
+				report.run({
+					"reportDescription":{
+						"reportSuiteID": config.reportSuite,
+						"dateFrom": new Date(new Date().setDate(new Date().getDate()-90)).toJSON().slice(0,10),
+						"dateTo": new Date().toJSON().slice(0,10),
+						"dateGranularity": "week",
+						"metrics": [
+							{ "id": "bouncerate" }
+						], 
+						"currentData": "true"
+					}
+				},{},[]
+				);
+			})
+			$(document).on("click", "#refresh a", function() {
+				document.location.reload(true);
+			});
+			$(document).on("click", "#reload a", function() {
+				sessionStorage.clear();
+				document.location.reload(true);
+			});
+		</script>
+	</head>
+	<body>
+		<header>
+			<div class="navbar navbar-fixed-top">
+				<div class="navbar-inner">
+					<a href="/" class="brand">Analytics Playbook</a>
+					<ul class="nav pull-right">
+					  <li id="refresh"><a href="#"><i class="fa fa-refresh fa-lg"></i></a></li>
+					  <li id="reload"><a href="#"><i class="fa fa-recycle fa-lg"></i></a></li>
+					</ul>
+				 </div>
+			</div>
+		</header>
+		<div class="row row-eq-height">
+		  <div class="col-md-2 col-sm-12">
+			<div class="row">
+				<div class="col-md-12 col-sm-4">
+					<div class="jumbotron">
+						<h2>Page Views</h2>
+						<div id="pvTotals"></div>
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-4">
+					<div class="jumbotron">
+						<h2>Visits</h2>
+						<div id="viTotals"></div>
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-4">
+					<div class="jumbotron">
+						<h2>Visitors</h2>
+						<div id="uvTotals"></div>
+					</div>
+				</div>
+			</div>
+		  </div>
+		  <div class="col-md-5 col-sm-6">
+			<div class="jumbotron">
+				<h2>Top 10 Pages</h2>
+				<div class="ct-chart" id="pageRank"></div>
+			</div>
+		  </div>
+		  <div class="col-md-5 col-sm-6">
+			<div class="jumbotron">
+				<h2>Top 10 Authors</h2>
+				<div class="ct-chart" id="authRank"></div>
+			</div>	
+		  </div>
+		</div>
+		<div class="row row-eq-height">
+		  <div class="col-md-6 col-sm-6">
+			<div class="jumbotron">
+				<h2>Pageviews last 90 days</h2>
+				<div class="ct-chart" id="pvTrend"></div>
+			</div>
+		  </div>
+		  <div class="col-md-6 col-sm-6">
+			  <div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-4 col-sm-12">
+								<div class="jumbotron">
+									<h2>Fork this!</h2>
+									<div id="forkTotals"></div>
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-12">
+								<div class="jumbotron">
+									<h2>Time spent per Visit</h2>
+									<div id="tvTotals"></div>
+								</div>
+							</div>
+							<div class="col-md-4 col-sm-12">
+								<div class="jumbotron">
+									<h2>Bounce Rate</h2>
+									<div id="brTotals"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12">
+						<div class="jumbotron jtb">
+							<h2>Fork this! last 90 days</h2>
+							<div class="ct-chart" id="forkTrend"></div>
+						</div>
+					</div>
+				</div>	
+		  </div>
+		</div>
+	</body>
+</html>
