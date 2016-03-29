@@ -21,7 +21,7 @@ function Report(reportConfig) {
 		
 		switch (reportConfig['dataElementType']) {
             case 'TrendGraph':
-				var chart = new Chartist.Line(reportConfig['dataElement']).on('draw', function(data) {if(data.type === 'label' && data.axis === 'x') {data.element.attr({x: data.x - data.width / 2});}});
+				var chart = new Chartist.Line(reportConfig['dataElement']).on('draw', function(data) {if(data.type === 'label' && data.axis === 'x') {data.element.attr({x: data.x - data.width / 2});}}, (data) => { if (data.type === 'label') { const dX = data.width / 2 + (100 - data.width); data.element.attr({ x: data.element.attr('x') - dX })}});
 				$( document ).on(eventName, function(event, report) {
 					var x = report.data.map(function(element) {
 						return element.counts[0];
@@ -41,7 +41,27 @@ function Report(reportConfig) {
 				});
                 break;
 			case 'RankGraphVer':
-				var chart = new Chartist.Bar(reportConfig['dataElement']).on('draw', function(data) {if(data.type === 'label' && data.axis === 'x') {data.element.attr({x: data.x - data.width / 2});}});
+				var chart = new Chartist.Bar(reportConfig['dataElement']).on('draw', function(data) {if(data.type === 'label' && data.axis === 'x') {data.element.attr({x: data.x - data.width / 2});}}, (data) => { if (data.type === 'label') { const dX = data.width / 2 + (100 - data.width); data.element.attr({ x: data.element.attr('x') - dX })}});
+				$( document ).on(eventName, function(event, report) {
+					console.log(report)
+					var x = report.data.map(function(element) {
+						return element.counts[0];
+					});
+					var y = report.data.map(function(element) {
+						return  element.name;
+					});
+					var data1 = {
+						labels: y,
+						series: [x]
+					};
+					var options = reportOptions;
+					var responsiveOptions = reportResponsiveOptions;
+					chart.update(data1,options,true);
+					if (reportConfig['loadingDisable'] === true) {$( "html" ).removeClass( "loading" );}
+				});
+                break;
+			case 'Pie':
+				var chart = new Chartist.Pie(reportConfig['dataElement']).on('draw', function(data) {if(data.type === 'label' && data.axis === 'x') {data.element.attr({x: data.x - data.width / 2});}});
 				$( document ).on(eventName, function(event, report) {
 					console.log(report)
 					var x = report.data.map(function(element) {
@@ -168,9 +188,12 @@ function Report(reportConfig) {
 				}
 			});
 		} else {
-			var reportID = +sessionStorage.getItem(reportConfig['id']);
-			console.log("Rerun: "+reportID);
-			_this.makeGetReport(reportID, eventName);
+			var report = JSON.parse(sessionStorage.getItem(reportConfig['id']));
+			console.log("Rerun: "+report);
+			_this.setPageTotals(report);
+			var event = jQuery.Event(eventName);
+			console.log("Rerun: Report build");
+			$( document ).trigger(event, report);
 		}
     };
 	
@@ -182,6 +205,9 @@ function Report(reportConfig) {
 		MarketingCloud.makeRequest(config.username, config.secret, method, params, config.endpoint, function(response) {
 			if (response.status == 200) {
 				var report = response.responseJSON.report;
+				sessionStorage.removeItem(reportConfig['id']);
+				var reportSs = JSON.stringify(report);
+				sessionStorage.setItem(reportConfig['id'], reportSs);
 				_this.setPageTotals(report);
 				var event = jQuery.Event(eventName);
 				console.log(response.status+": Report build");
