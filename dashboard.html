@@ -1,6 +1,6 @@
 <html class="loading">
 	<head>
-		<title>Analytics Playbook: Dashboard</title>
+		<title>Adobe Analytics: Report Dashboard</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/chartist.min.css">
 		<link rel="stylesheet" href="css/chartist-plugin-tooltip.css">
@@ -61,9 +61,9 @@
 				},[
 				]);
 				var report = new Report({
-					id: "authRanked",
-					dataElement: "#authRank",
-					dataElementType: "RankGraphVer",
+					id: "mdPie",
+					dataElement: "#mdPie",
+					dataElementType: "Pie",
 					loadingDisable: true
 				});
 				report.run({
@@ -73,30 +73,16 @@
 						"dateTo": new Date().toJSON().slice(0,10),
 						//"dateGranularity": "week",
 						"metrics": [
-							{ "id": "pageviews" }
+							{ "id": "visits" }
 						], 
 						"elements": [
-						    { "id": "prop1","top":"10" }
+						    { "id": "mobileDeviceType","top":"3" }
 						],
 						"currentData": "true"
 					}
 				},{
 					fullWidth: true,
-					chartPadding: {
-						right: 40
-					},
-					lineSmooth: false,
-					seriesBarDistance: 10,
-					reverseData: true,
-					horizontalBars: true,
-					axisX: {
-						showGrid: false,
-						offset: 10,
-					},
-					axisY: {
-						offset: 150,
-					},
-					plugins: [Chartist.plugins.tooltip()]
+					donut: true
 				},[
 				]);
 				var report = new Report({
@@ -310,8 +296,8 @@
 		  </div>
 		  <div class="col-md-5 col-sm-6">
 			<div class="jumbotron">
-				<h2>Top 10 Authors</h2>
-				<div class="ct-chart" id="authRank"></div>
+				<h2>Mobile Devices (Visits)</h2>
+				<div class="ct-chart" id="mdPie"></div>
 			</div>	
 		  </div>
 		</div>
@@ -328,13 +314,13 @@
 						<div class="row">
 							<div class="col-md-4 col-sm-12">
 								<div class="jumbotron">
-									<h2>Fork this!</h2>
+									<h2>Event1</h2>
 									<div id="forkTotals"></div>
 								</div>
 							</div>
 							<div class="col-md-4 col-sm-12">
 								<div class="jumbotron">
-									<h2>Time spent per Visit</h2>
+									<h2>Time s.p. Visit</h2>
 									<div id="tvTotals"></div>
 								</div>
 							</div>
@@ -348,7 +334,7 @@
 					</div>
 					<div class="col-md-12 col-sm-12">
 						<div class="jumbotron jtb">
-							<h2>Fork this! last 90 days</h2>
+							<h2>Event1 last 90 days</h2>
 							<div class="ct-chart" id="forkTrend"></div>
 						</div>
 					</div>

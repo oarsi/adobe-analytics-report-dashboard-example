@@ -6,7 +6,7 @@
 
 .row { margin-right: 0px;}
 
-#pvTrend, #pageRank, #authRank {height: 375px;}
+#pvTrend, #pageRank, #mdPie {height: 375px;}
 
 #forkTrend {height: 172px;}
 
@@ -103,6 +103,26 @@ table tr:hover td {
     background: #f2f2f2;
     background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
     background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);
+}
+
+/*.ct-chart-bar .ct-label.ct-horizontal.ct-end {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transform: rotate(-30deg);
+  transform-origin: 100% 0;
+  text-align: right;
+  max-height: 1.5em;
+  min-width: 100px;
+  max-width: 100px;
+}*/
+
+.ct-label {
+    fill: rgba(0,0,0,1);
+    color: rgba(0,0,0,1);
+    font-size: 1.1rem;
+    line-height: 1.2em;
 }
 
 body {
